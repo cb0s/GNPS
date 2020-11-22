@@ -1,9 +1,9 @@
 package com.sjgs.ping.lib.exception;
 
-import com.sjgs.ping.lib.event.Event;
+import com.sjgs.ping.lib.event.protocol.NetEvent;
 
 /**
- * Indicates that an {@link Event} was not handled by the user of this library.<br>
+ * Indicates that an {@link NetEvent} was not handled by the user of this library.<br>
  * All that can occur must be handled!
  * 
  * @author Cedric Boes
@@ -12,7 +12,7 @@ import com.sjgs.ping.lib.event.Event;
 public class UnhandledEventException extends RuntimeException {
 
 	/**
-	 * 
+	 * ID for serialization.
 	 */
 	private static final long serialVersionUID = -6007634503252730665L;
 
@@ -36,7 +36,5 @@ public class UnhandledEventException extends RuntimeException {
 	public UnhandledEventException(Throwable cause) {
 		super(cause);
 	}
-
-	
 	
 }

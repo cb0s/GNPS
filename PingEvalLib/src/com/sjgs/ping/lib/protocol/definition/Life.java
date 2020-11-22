@@ -3,10 +3,10 @@ package com.sjgs.ping.lib.protocol.definition;
 import java.net.InetSocketAddress;
 
 import com.sjgs.ping.lib.event.EventBus;
-import com.sjgs.ping.lib.event.HeartbeatEvent;
+import com.sjgs.ping.lib.event.protocol.HeartbeatEvent;
 
 /**
- * Represents the {@link MessageTypes#ALIVE Life}-Command.<br>
+ * Represents the {@link MessageType#ALIVE Life}-Command.<br>
  * This command does not come with payload.
  * 
  * @author Cedric Boes

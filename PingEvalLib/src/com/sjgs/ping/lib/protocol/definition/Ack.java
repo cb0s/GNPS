@@ -3,9 +3,9 @@ package com.sjgs.ping.lib.protocol.definition;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
-import com.sjgs.ping.lib.event.AcknowledgeEvent;
-import com.sjgs.ping.lib.event.BadEvent;
 import com.sjgs.ping.lib.event.EventBus;
+import com.sjgs.ping.lib.event.protocol.AcknowledgeEvent;
+import com.sjgs.ping.lib.event.protocol.BadNetEvent;
 
 /**
  * Represents the Acknowledge message of the protocol.<br>
@@ -35,10 +35,9 @@ public final class Ack extends Command {
 			bus.publish(ack);
 			return true;
 		} catch(NumberFormatException e) {
-			BadEvent be = new BadEvent(e, ip, MessageTypes.ACK, id, payload);
+			BadNetEvent be = new BadNetEvent(ip, id, e, MessageType.ACK, payload);
 			bus.publish(be);
 			return false;
 		}
 	}
-
 }

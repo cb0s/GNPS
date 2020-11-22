@@ -2,9 +2,9 @@ package com.sjgs.ping.lib.protocol.definition;
 
 import java.net.InetSocketAddress;
 
-import com.sjgs.ping.lib.event.BadEvent;
 import com.sjgs.ping.lib.event.EventBus;
-import com.sjgs.ping.lib.event.PongEvent;
+import com.sjgs.ping.lib.event.protocol.BadNetEvent;
+import com.sjgs.ping.lib.event.protocol.PongEvent;
 
 /**
  * The answer for the {@link Ping}.<br>
@@ -35,7 +35,7 @@ public class Pong extends Command {
 			
 			return true;
 		} catch (Exception e) {
-			BadEvent be = new BadEvent(e, ip, MessageTypes.PONG, id, payload);
+			BadNetEvent be = new BadNetEvent(ip, id, e, MessageType.PONG, payload);
 			bus.publish(be);
 			return false;
 		}

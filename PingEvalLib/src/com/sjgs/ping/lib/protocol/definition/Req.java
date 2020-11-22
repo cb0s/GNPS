@@ -4,7 +4,7 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 
 import com.sjgs.ping.lib.event.EventBus;
-import com.sjgs.ping.lib.event.RequestEvent;
+import com.sjgs.ping.lib.event.protocol.RequestEvent;
 
 /**
  * Represents the Request-command for this protocol.<br>

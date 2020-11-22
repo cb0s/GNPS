@@ -2,9 +2,9 @@ package com.sjgs.ping.lib.protocol.definition;
 
 import java.net.InetSocketAddress;
 
-import com.sjgs.ping.lib.event.BadEvent;
 import com.sjgs.ping.lib.event.EventBus;
-import com.sjgs.ping.lib.event.ResponseEvent;
+import com.sjgs.ping.lib.event.protocol.BadNetEvent;
+import com.sjgs.ping.lib.event.protocol.ResponseEvent;
 
 /**
  * Represents the response for {@link Req requests} in this protocol.<br>
@@ -42,7 +42,7 @@ public final class Res extends Command {
 			
 			return true;
 		} catch (NumberFormatException e) {
-			BadEvent be = new BadEvent(e, ip, MessageTypes.RES, id, payload);
+			BadNetEvent be = new BadNetEvent(ip, id, e, MessageType.RES, payload);
 			bus.publish(be);
 			return false;	
 		}

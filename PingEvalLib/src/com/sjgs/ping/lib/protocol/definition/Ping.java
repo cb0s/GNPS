@@ -3,7 +3,7 @@ package com.sjgs.ping.lib.protocol.definition;
 import java.net.InetSocketAddress;
 
 import com.sjgs.ping.lib.event.EventBus;
-import com.sjgs.ping.lib.event.PingEvent;
+import com.sjgs.ping.lib.event.protocol.PingEvent;
 
 /**
  * Represents the Ping-message. It requires a special answer, the {@link Pong pong-message}.<br>

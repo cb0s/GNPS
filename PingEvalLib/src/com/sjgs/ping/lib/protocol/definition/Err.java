@@ -4,9 +4,9 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.Arrays;
 
-import com.sjgs.ping.lib.event.BadEvent;
-import com.sjgs.ping.lib.event.ErrorEvent;
 import com.sjgs.ping.lib.event.EventBus;
+import com.sjgs.ping.lib.event.protocol.BadNetEvent;
+import com.sjgs.ping.lib.event.protocol.ProtocolErrorEvent;
 import com.sjgs.ping.lib.protocol.ErrorCodes;
 
 
@@ -26,7 +26,7 @@ import com.sjgs.ping.lib.protocol.ErrorCodes;
  * @version 1.0
  */
 public final class Err extends Command {
-
+	
 	/**
 	 * See {@link Command#Command(InetAddress, byte, String)} for more details.
 	 */
@@ -44,11 +44,11 @@ public final class Err extends Command {
 										.map(s -> ErrorCodes.getCode(Integer.parseInt(s)))
 										.toArray(ErrorCodes[]::new);
 			
-			ErrorEvent ee = new ErrorEvent(ip, id, codes);
+			ProtocolErrorEvent ee = new ProtocolErrorEvent(ip, id, codes);
 			bus.publish(ee);
 			return true;
 		} catch(NumberFormatException | StringIndexOutOfBoundsException e) {
-			BadEvent be = new BadEvent(e, ip, MessageTypes.ERR, id, payload);
+			BadNetEvent be = new BadNetEvent(ip, id, e, MessageType.ERR, payload);
 			bus.publish(be);
 			return false;
 		}

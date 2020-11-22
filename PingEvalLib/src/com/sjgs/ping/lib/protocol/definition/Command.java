@@ -2,13 +2,14 @@ package com.sjgs.ping.lib.protocol.definition;
 
 import java.net.InetSocketAddress;
 
-import com.sjgs.ping.lib.event.Event;
 import com.sjgs.ping.lib.event.EventBus;
-import com.sjgs.ping.lib.event.UnknownCommandEvent;
-import com.sjgs.ping.lib.protocol.MessageParser;
+import com.sjgs.ping.lib.event.protocol.NetEvent;
+import com.sjgs.ping.lib.event.protocol.UnknownCommandEvent;
+import com.sjgs.ping.lib.net.UdpAdapter;
+import com.sjgs.ping.lib.protocol.MessageConverter;
 
 /**
- * The super class for all the commands from the UDP-Packages which are supported by the {@link MessageParser}.<br>
+ * The super class for all the commands from the UDP-Packets which are supported by the {@link MessageConverter}.<br>
  * Commands are the first part of an incoming message. These will be split as following:<br>
  * Format: <code>CMD>ID>PAYLOAD</code>
  * <ul>
@@ -76,17 +77,39 @@ abstract class Command {
 	
 	/**
 	 * Starts parsing and handling the given raw payload which was part of a received UDP-packet sent by the given
-	 * IP-address.<br>
+	 * {@link #ip}.<br>
 	 * This packet must be parsed and handled according to the specifications.<br>
 	 * If those require an answer, they must be sent by whoever handles the events which were triggered
 	 * by the handlers.
 	 * <br>
-	 * A payload is considered to be handled if the correct {@link Event Events} have been triggered. 
+	 * A payload is considered to be handled if the correct {@link NetEvent Events} have been triggered. 
 	 * 
-	 * @param bus {@link EventBus} to which {@link Event Events} can be published
+	 * @param bus {@link EventBus} to which {@link NetEvent Events} can be published
 	 * @return if handling was successful or the received payload was invalid
 	 */
 	public abstract boolean handle(EventBus bus);
+	
+	/**
+	 * Converting this object into the right format so it can be sent to {@link #ip}.<br>
+	 * The message ID cannot be set, this will be done by the {@link UdpAdapter} automatically.<br>
+	 * <br>
+	 * Possible Exceptions will not be caught!<br>
+	 * Exception that can occur:
+	 * <ul>
+	 * 	<li>{@link IllegalArgumentException}: if this {@link Command} is not supported by the protocol</li>
+	 * </ul>
+	 * 
+	 * @param udp {@link UdpAdapter} for sending
+	 * @return if sending was successful or an exception occurred
+	 */
+	public byte send(UdpAdapter udp) {
+		MessageType type = MessageType.getFromRepr(this.getClass());
+		if (type != null) {
+			return udp.send(ip, type, payload);
+		} else {
+			throw new IllegalArgumentException("There is no MessageType called " + this.getClass().getName() + "!");
+		}
+	}
 	
 	/**
 	 * Returns whether the {@link #ip} matches the {@link #UNKNOWN_HOST}.
@@ -155,6 +178,7 @@ abstract class Command {
 												+ lowerBound + ")!");
 		}
 	}
+	
 	/**
 	 * Checks if the payload's length is too big. Throws an {@link IllegalArgumentException} if so.
 	 * 
@@ -167,12 +191,13 @@ abstract class Command {
 												+ upperBound + ")!");
 		}
 	}
+	
 	/**
-	 * Checks if the payload's length is in the correct bounds and throws an Illegal-Argument-Exception otherwise.
+	 * Checks if the payload's length is in the correct bounds and throws an {@link IllegalArgumentException} otherwise.
 	 * 
 	 * @param lowerBound for the payload (inclusive)
 	 * @param upperBound for the payload (inclusive)
-	 * @throws IllegalArgumentException if the payload's length is the correct bounds
+	 * @throws IllegalArgumentException if the payload's length is not the correct bounds
 	 */
 	protected void checkPayloadInBounds(int lowerBound, int upperBound) {
 		checkPayloadLowerBound(lowerBound);

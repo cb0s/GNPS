@@ -4,9 +4,9 @@ import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
-import com.sjgs.ping.lib.event.BadEvent;
 import com.sjgs.ping.lib.event.EventBus;
-import com.sjgs.ping.lib.event.RegisterEvent;
+import com.sjgs.ping.lib.event.protocol.BadNetEvent;
+import com.sjgs.ping.lib.event.protocol.RegisterEvent;
 
 /**
  * Represents the Register message for this protocol. It registers different Clients between each other for
@@ -43,7 +43,7 @@ public final class Reg extends Command {
 			return true;
 		} catch (NumberFormatException | StringIndexOutOfBoundsException
 				| SecurityException | UnknownHostException e) {
-			BadEvent be = new BadEvent(e, ip, MessageTypes.REG, id, payload);
+			BadNetEvent be = new BadNetEvent(ip, id, e, MessageType.REG, payload);
 			bus.publish(be);
 			return false;
 		}		

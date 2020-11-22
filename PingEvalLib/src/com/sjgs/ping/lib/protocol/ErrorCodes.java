@@ -8,7 +8,7 @@ public enum ErrorCodes {
 	private ErrorCodes(int code) {
 		statusCode = code;
 	}
-	
+
 	public static ErrorCodes getCode(int code) {
 		return null;
 	}

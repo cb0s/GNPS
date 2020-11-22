@@ -3,7 +3,7 @@ package com.sjgs.ping.lib.protocol.definition;
 import java.net.InetSocketAddress;
 
 import com.sjgs.ping.lib.event.EventBus;
-import com.sjgs.ping.lib.event.SendingEvent;
+import com.sjgs.ping.lib.event.protocol.SendingEvent;
 
 /**
  * Represents the Sending-messages for this protocol.<br>
