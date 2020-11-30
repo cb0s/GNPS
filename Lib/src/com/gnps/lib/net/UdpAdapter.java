@@ -102,7 +102,7 @@ public final class UdpAdapter extends NetAdapter {
 
 	@Override
 	public byte send(InetSocketAddress address, MessageType type, String payload) {
-		
+		String raw = type.name() + ">" + payload;
 		return 0;
 	}
 }

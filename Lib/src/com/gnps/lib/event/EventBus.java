@@ -3,6 +3,7 @@ package com.gnps.lib.event;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -18,7 +19,7 @@ import com.gnps.lib.exception.UnhandledEventException;
  * before exiting the application!
  * 
  * @author Cedric Boes
- * @version 1.1
+ * @version 1.2
  */
 public class EventBus implements AutoCloseable {
 
@@ -48,12 +49,26 @@ public class EventBus implements AutoCloseable {
 	private boolean closed;
 
 	/**
-	 * Creates a new {@link EventBus} with the given threadPool and the handlers.<br>
+	 * Creates a new {@link EventBus} with a new {@link ThreadPoolExecutor ThreadPool} and the given handlers.<br>
 	 * <br>
-	 * <em>Note: all parameters are final and must not be changed during runtime!</em>
+	 * <em>Note: All parameters are final and must not be changed during runtime!</em>
 	 * 
-	 * @param handlers used to initializes {@link #handlers} and {@link #highPrioHandlers}
-	 * @param threadPool used to initialize {@link #threadPool}
+	 * @param handlers			used to initialize {@link #handlers} and {@link #highPrioHandlers}
+	 * @param parallelThreads	constant amount of {@link Thread threads} in the {@link #threadPool}
+	 * @param maxThreads		maximum amount of {@link Thread threads} in the {@link #threadPool}
+	 */
+	public EventBus(List<EventHandler<? extends Event>> handlers, int parallelThreads, int maxThreads) {
+		this(handlers, new ThreadPoolExecutor(
+				parallelThreads, maxThreads, 5, TimeUnit.MINUTES, new ArrayBlockingQueue<Runnable>(50)));
+	}
+	
+	/**
+	 * Creates a new {@link EventBus} with the given {@link ThreadPoolExecutor ThreadPool} and the given handlers.<br>
+	 * <br>
+	 * <em>Note: All parameters are final and must not be changed during runtime!</em>
+	 * 
+	 * @param handlers 		used to initializes {@link #handlers} and {@link #highPrioHandlers}
+	 * @param threadPool 	used to initialize {@link #threadPool}
 	 * @throws IllegalArgumentException if either one of the given arguments is <code>null</code> or handlers is empty
 	 */
 	public EventBus(List<EventHandler<? extends Event>> handlers, ThreadPoolExecutor threadPool) {
@@ -146,29 +161,34 @@ public class EventBus implements AutoCloseable {
 
 	/**
 	 * Initiates shutdown of all Threads currently in the {@link #threadPool}.<br>
-	 * Waiting for 5 sec. to complete shutdown otherwise the running tasks will be interrupt which might cause
-	 * errors as described in {@link ThreadPoolExecutor#shutdownNow() shutdownNow()}.<br>
+	 * Waiting for 5 sec. to complete shutdown otherwise the running tasks will be interrupted.<br>
 	 * <br>
 	 * Overrides {@link AutoCloseable#close() close()}.
-	 * @throws InterruptedException if interrupted while waiting for the {@link EventHandler handlers} to finish
 	 */
 	@Override
-	public void close() throws InterruptedException {
+	public void close() {
 		close(5);
 	}
 
 	/**
-	 * Basically {@link #close()} with a custom timeout.
+	 * Basically {@link #close()} with a custom timeout and a return to inform if shutdown was successful.
 	 * 
 	 * @param timeout (in sec.) after which all remaining Threads will be killed
-	 * @throws InterruptedException if interrupted while waiting for the {@link EventHandler handlers} to finish
+	 * @returns if interrupted while waiting for the {@link EventHandler handlers} to finish
 	 */
-	public void close(int timeout) throws InterruptedException {
+	public boolean close(int timeout) {
 		threadPool.shutdown();
-		if (!threadPool.awaitTermination(timeout, TimeUnit.SECONDS)) {
-			threadPool.shutdownNow();
-		}
 		closed = true;
+
+		try {
+			if (!threadPool.awaitTermination(timeout, TimeUnit.SECONDS)) {
+				threadPool.shutdownNow();
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 	
 	/**
