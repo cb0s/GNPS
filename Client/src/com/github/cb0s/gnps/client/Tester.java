@@ -1,10 +1,10 @@
-package com.gnps.client;
+package com.github.cb0s.gnps.client;
 
 import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
-import com.gnps.lib.event.EventBus;
+import com.github.cb0s.gnps.lib.event.EventBus;
 
 public class Tester {
 	public static void main(String[] args) throws IOException {
