@@ -1,4 +1,4 @@
-package com.gnps.lib.event;
+package com.github.cb0s.gnps.lib.event;
 
 /**
  * Interface, representing all events which can be handled by the {@link EventBus}.

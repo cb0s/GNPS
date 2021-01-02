@@ -1,4 +1,4 @@
-package com.gnps.lib.event;
+package com.github.cb0s.gnps.lib.event;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,8 +7,8 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import com.gnps.lib.event.protocol.PingEvent;
-import com.gnps.lib.exception.UnhandledEventException;
+import com.github.cb0s.gnps.lib.event.protocol.PingEvent;
+import com.github.cb0s.gnps.lib.exception.UnhandledEventException;
 
 /**
  * A simple implementation of an Event-Bus which notifies all {@link EventHandler handlers} linked to a specific

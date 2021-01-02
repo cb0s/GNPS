@@ -1,6 +1,6 @@
-package com.gnps.lib.event.net;
+package com.github.cb0s.gnps.lib.event.net;
 
-import com.gnps.lib.net.NetPacket;
+import com.github.cb0s.gnps.lib.net.NetPacket;
 
 public class PacketEvent extends NetEvent {
 

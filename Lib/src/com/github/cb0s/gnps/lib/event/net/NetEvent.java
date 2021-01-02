@@ -1,4 +1,4 @@
-package com.gnps.lib.event.net;
+package com.github.cb0s.gnps.lib.event.net;
 
 import java.net.InetSocketAddress;
 

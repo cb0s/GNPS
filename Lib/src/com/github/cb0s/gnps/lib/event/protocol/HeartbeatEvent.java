@@ -1,8 +1,8 @@
-package com.gnps.lib.event.protocol;
+package com.github.cb0s.gnps.lib.event.protocol;
 
 import java.net.InetSocketAddress;
 
-import com.gnps.lib.event.net.NetEvent;
+import com.github.cb0s.gnps.lib.event.net.NetEvent;
 
 public class HeartbeatEvent extends NetEvent {
 

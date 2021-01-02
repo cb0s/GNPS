@@ -1,10 +1,10 @@
-package com.gnps.lib.protocol.definition;
+package com.github.cb0s.gnps.lib.protocol.definition;
 
 import java.net.InetSocketAddress;
 
-import com.gnps.lib.event.EventBus;
-import com.gnps.lib.event.net.BadNetEvent;
-import com.gnps.lib.event.protocol.ResponseEvent;
+import com.github.cb0s.gnps.lib.event.EventBus;
+import com.github.cb0s.gnps.lib.event.net.BadNetEvent;
+import com.github.cb0s.gnps.lib.event.protocol.ResponseEvent;
 
 /**
  * Represents the response for {@link Req requests} in this protocol.<br>

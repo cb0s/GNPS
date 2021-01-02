@@ -1,4 +1,4 @@
-package com.gnps.lib.protocol;
+package com.github.cb0s.gnps.lib.protocol.definition;
 
 public enum ErrorCodes {
 	SERVER_ERROR(503);

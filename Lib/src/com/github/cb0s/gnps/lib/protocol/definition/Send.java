@@ -1,10 +1,10 @@
-package com.gnps.lib.protocol.definition;
+package com.github.cb0s.gnps.lib.protocol.definition;
 
 import java.net.InetSocketAddress;
 
-import com.gnps.lib.event.EventBus;
-import com.gnps.lib.event.protocol.SendingEvent;
-import com.gnps.lib.net.NetPacket;
+import com.github.cb0s.gnps.lib.event.EventBus;
+import com.github.cb0s.gnps.lib.event.protocol.SendingEvent;
+import com.github.cb0s.gnps.lib.net.NetPacket;
 
 /**
  * Represents the Sending-messages for this protocol.<br>

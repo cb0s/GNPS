@@ -1,13 +1,38 @@
-package com.gnps.lib.protocol;
+package com.github.cb0s.gnps.lib.protocol;
 
-public class MessageIdCreator {
+import com.github.cb0s.gnps.lib.protocol.definition.Command;
+
+/**
+ * 
+ * @author Cedric Boes
+ * @version 1.0
+ */
+public class MessageIdGenerator {
+	/**
+	 * 
+	 */
+	public static final int minId = Command.INVALID_ID + 1;
+	
+	/**
+	 * 
+	 */
 	private int id;
 	
-	public MessageIdCreator() {
-		id = 0;
+	/**
+	 * 
+	 */
+	public MessageIdGenerator() {
+		id = minId;
 	}
 	
-	public synchronized int getNewId() {
-		return id++;
+	/**
+	 * 
+	 * @return
+	 */
+	public synchronized byte getNewId() {
+		if (id > 255) {
+			id = minId;
+		}
+		return (byte) id++;
 	}
 }

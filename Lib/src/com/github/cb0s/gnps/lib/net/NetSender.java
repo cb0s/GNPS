@@ -1,8 +1,8 @@
-package com.gnps.lib.net;
+package com.github.cb0s.gnps.lib.net;
 
 import java.net.InetSocketAddress;
 
-import com.gnps.lib.protocol.definition.MessageType;
+import com.github.cb0s.gnps.lib.protocol.definition.MessageType;
 
 /**
  * NetSender-Implementations are Classes which can handle the Network-Sending process for a specific protocol or via a

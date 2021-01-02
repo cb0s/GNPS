@@ -1,12 +1,12 @@
-package com.gnps.lib.protocol.definition;
+package com.github.cb0s.gnps.lib.protocol.definition;
 
 import java.net.InetSocketAddress;
 
-import com.gnps.lib.event.EventBus;
-import com.gnps.lib.event.net.NetEvent;
-import com.gnps.lib.event.protocol.UnknownCommandEvent;
-import com.gnps.lib.net.NetSender;
-import com.gnps.lib.protocol.MessageConverter;
+import com.github.cb0s.gnps.lib.event.EventBus;
+import com.github.cb0s.gnps.lib.event.net.NetEvent;
+import com.github.cb0s.gnps.lib.event.protocol.UnknownCommandEvent;
+import com.github.cb0s.gnps.lib.net.NetSender;
+import com.github.cb0s.gnps.lib.protocol.MessageConverter;
 
 /**
  * The super class for all the commands from the UDP-Packets which are supported by the {@link MessageConverter}.<br>
@@ -24,7 +24,7 @@ import com.gnps.lib.protocol.MessageConverter;
  * @author Cedric Boes
  * @version 1.0
  */
-abstract class Command {
+public abstract class Command {
 	
 	/**
 	 * Indicates that there was no valid {@link #payload} included into the packet.

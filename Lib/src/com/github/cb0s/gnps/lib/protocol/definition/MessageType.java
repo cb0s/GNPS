@@ -1,4 +1,4 @@
-package com.gnps.lib.protocol.definition;
+package com.github.cb0s.gnps.lib.protocol.definition;
 
 /**
  * Enum for the available {@link Command commands} of this protocol.<br>

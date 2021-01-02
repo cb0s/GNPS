@@ -1,4 +1,4 @@
-package com.gnps.lib.event;
+package com.github.cb0s.gnps.lib.event;
 
 /**
  * {@link Runnable Runnable-Wrapper} for the {@link EventHandler} which allows it to be used by a designated

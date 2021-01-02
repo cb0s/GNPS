@@ -1,6 +1,6 @@
-package com.gnps.lib.exception;
+package com.github.cb0s.gnps.lib.exception;
 
-import com.gnps.lib.event.Event;
+import com.github.cb0s.gnps.lib.event.Event;
 
 /**
  * Indicates that an {@link Event} was not handled by the user of this library.<br>

@@ -1,9 +1,9 @@
-package com.gnps.lib.protocol.definition;
+package com.github.cb0s.gnps.lib.protocol.definition;
 
 import java.net.InetSocketAddress;
 
-import com.gnps.lib.event.EventBus;
-import com.gnps.lib.event.protocol.PingEvent;
+import com.github.cb0s.gnps.lib.event.EventBus;
+import com.github.cb0s.gnps.lib.event.protocol.PingEvent;
 
 /**
  * Represents the Ping-message. It requires a special answer, the {@link Pong pong-message}.<br>

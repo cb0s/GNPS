@@ -1,12 +1,12 @@
-package com.gnps.lib.protocol.definition;
+package com.github.cb0s.gnps.lib.protocol.definition;
 
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.net.UnknownHostException;
 
-import com.gnps.lib.event.EventBus;
-import com.gnps.lib.event.net.BadNetEvent;
-import com.gnps.lib.event.protocol.RegisterEvent;
+import com.github.cb0s.gnps.lib.event.EventBus;
+import com.github.cb0s.gnps.lib.event.net.BadNetEvent;
+import com.github.cb0s.gnps.lib.event.protocol.RegisterEvent;
 
 /**
  * Represents the Register message for this protocol. It registers different Clients between each other for
