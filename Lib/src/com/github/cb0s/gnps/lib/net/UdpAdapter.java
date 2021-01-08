@@ -14,7 +14,6 @@ import com.github.cb0s.gnps.lib.event.ErrorEvent;
 import com.github.cb0s.gnps.lib.event.EventBus;
 import com.github.cb0s.gnps.lib.event.net.PacketEvent;
 import com.github.cb0s.gnps.lib.protocol.MessageIdGenerator;
-import com.github.cb0s.gnps.lib.protocol.definition.Command;
 import com.github.cb0s.gnps.lib.protocol.definition.MessageType;
 
 /**
@@ -79,7 +78,7 @@ public final class UdpAdapter extends NetAdapter {
 	 */
 	@Override
 	public NetPacket receive() {
-		NetPacket packet = new NetPacket(null, null, Command.INVALID_ID);
+		NetPacket packet = new NetPacket(null, null);
 
 		if (socket.isClosed()) {
 			System.err.println("UDP-Adapter is already closed!");

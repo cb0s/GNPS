@@ -28,7 +28,7 @@ public final class MessageConverter {
 	 * @throws NumberFormatException 
 	 * @throws IllegalStateException
 	 */
-	public static void parseCommand(NetPacket packet, EventBus bus) throws NoSuchMethodException, SecurityException, NumberFormatException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+	public static void parseCommand(NetPacket packet, EventBus bus, byte incomingId) throws NoSuchMethodException, SecurityException, NumberFormatException, InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		String[] parts = packet.getRawMessage().split(">");
 		
 		if (parts.length < 2 || parts.length > 3) {
@@ -36,7 +36,7 @@ public final class MessageConverter {
 		}
 		
 		byte id = Byte.parseByte(parts[1]);
-		if (id != packet.getIncomingId()) {
+		if (id != incomingId) {
 			throw new IllegalStateException();
 		}
 		
