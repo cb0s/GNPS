@@ -19,7 +19,7 @@ import com.github.cb0s.gnps.lib.exception.UnhandledEventException;
  * before exiting the application!
  * 
  * @author Cedric Boes
- * @version 1.2
+ * @version 1.3
  */
 public class EventBus implements AutoCloseable {
 
@@ -39,9 +39,9 @@ public class EventBus implements AutoCloseable {
 
 	/**
 	 * {@link EventHandler} for all unhandled {@link Event events} for this {@link EventBus}.<br>
-	 * To register this handler use {@link #registerHandleUnhandled(EventHandler)}.
+	 * To register this handler use {@link #registerHandler(EventHandler)}.
 	 */
-	private EventHandler<Event> unhandledHandler;
+	private EventHandler<? extends Event> unhandledHandler;
 	
 	/**
 	 * Indicates if {@link #close(int)} has been called, yet.
@@ -117,12 +117,12 @@ public class EventBus implements AutoCloseable {
 			if (unhandledHandler == null) {
 				throw new UnhandledEventException("No EventHandler for " + event.getClass().getName() + " registered!");
 			} else {
-				unhandledHandler.callHandler(event);
+				unhandledHandler.callHandler(new UnhandledEvent(event, event.getClass()));
 			}
+		} else {
+			handlerList.stream().forEach(
+					eh -> threadPool.submit(new EventHandlerRunner(eh, event)));	
 		}
-
-		handlerList.stream().forEach(
-				eh -> threadPool.submit(new EventHandlerRunner(eh, event)));
 	}
 
 	/**
@@ -153,10 +153,10 @@ public class EventBus implements AutoCloseable {
 				threadPool.submit(new EventHandlerRunner(unhandledHandler, event));
 			}
 
+		} else {
+			handlerList.stream().forEach(
+					eh -> eh.callHandler(event));	
 		}
-
-		handlerList.stream().forEach(
-				eh -> eh.callHandler(event));
 	}
 
 	/**
@@ -210,7 +210,7 @@ public class EventBus implements AutoCloseable {
 	 * 
 	 * @param handler new {@link #unhandledHandler}
 	 */
-	public void registerHandleUnhandled(EventHandler<Event> handler) {
+	public void registerUnhandledHandler(EventHandler<? extends Event> handler) {
 		this.unhandledHandler = handler;
 	}
 
